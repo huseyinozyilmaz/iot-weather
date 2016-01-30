@@ -1,0 +1,25 @@
+<html>
+<head>
+    <title>Pi IOT Temp</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io.connect('http://localhost:3001');
+        socket.on('message', function (data) {
+            console.log(data);
+            document.getElementById("temperature").innerText = data.temperature.value.toFixed(2);
+            document.getElementById("humidity").innerText = data.humidity.value.toFixed(2);
+            document.getElementById("t-unit").innerText = data.temperature.unit;
+            document.getElementById("h-unit").innerText = data.humidity.unit;
+        });
+    </script>
+</head>
+<body>
+    <h1>PI IOT Temp</h1>
+    <p>
+        <label>Temperature</label> : <strong id="temperature"></strong> <span id="t-unit"></span>
+    </p>
+    <p>
+        <label>Humidity</label> : <strong id="humidity"></strong> <span id="h-unit"></span>
+    </p>
+</body>
+</html>
