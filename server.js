@@ -3,6 +3,7 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var url = require('url');
 var ip = require('ip');
+var os = require("os");
 
 var config = { 
     protocol: 'http:',
@@ -22,6 +23,7 @@ app.get('/', function (req, res) {
 io.on('connection', function (socket) {
     setInterval(function() {
         var readings = {
+            id: os.hostname(),
             temperature : {
                 value: random(20,25),
                 unit: "°C",
