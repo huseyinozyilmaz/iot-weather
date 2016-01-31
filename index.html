@@ -1,11 +1,12 @@
 <html>
 <head>
-    <title>Pi IOT Temp</title>
+    <title>raspberrypi-cam</title>
     <script src="/socket.io/socket.io.js"></script>
     <script>
         var socket = io.connect('http://raspberrypi-cam.local:3001');
         socket.on('message', function (data) {
             console.log(data);
+            document.getElementById("thing").innerText = data.id;
             document.getElementById("temperature").innerText = data.temperature.value.toFixed(2);
             document.getElementById("humidity").innerText = data.humidity.value.toFixed(2);
             document.getElementById("t-unit").innerText = data.temperature.unit;
@@ -14,7 +15,7 @@
     </script>
 </head>
 <body>
-    <h1>PI IOT Temp</h1>
+    <h1 id="thing"></h1>
     <p>
         <label>Temperature</label> : <strong id="temperature"></strong> <span id="t-unit"></span>
     </p>
