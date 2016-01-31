@@ -1,4 +1,5 @@
 var app = require('express')();
+var engine = require('express-dot-engine');
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var url = require('url');
@@ -12,16 +13,22 @@ var config = {
     port: 3001
 };
 
+app.engine('dot', engine.__express);
+app.set('views', __dirname + '/views');
+app.set('view engine', 'dot');
+
 server.listen(config.port, function(){
     console.log('App running on ' + url.format(config));
 });
 
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
+    res.render('index', { hostname : url.format(config)});
 });
 
 io.on('connection', function (socket) {
-    setInterval(function() {
+    var delay = 5000;
+
+    (function sendData() {
         var readings = {
             id: os.hostname(),
             temperature : {
@@ -36,8 +43,11 @@ io.on('connection', function (socket) {
             }
         };
         console.log(readings);
-        socket.send(readings);    
-    }, 5000);
+        socket.send(readings); 
+        
+        setTimeout(sendData, delay);
+    })();
+    
 });
 
 function random (low, high) {

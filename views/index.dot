@@ -3,7 +3,7 @@
     <title>raspberrypi-cam</title>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        var socket = io.connect('http://raspberrypi-cam.local:3001');
+        var socket = io.connect('[[= model.hostname ]]');
         socket.on('message', function (data) {
             console.log(data);
             document.getElementById("thing").innerText = data.id;
