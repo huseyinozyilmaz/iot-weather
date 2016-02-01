@@ -49,7 +49,7 @@ io.on('connection', function (socket) {
                     timestamp: timestamp
                 }
             };
-            console.log("T:" + readout.temperature.toFixed(2) + " | H:" + eadout.humidity.toFixed(2));
+            console.log("T:" + readout.temperature.toFixed(2) + " | H:" + readout.humidity.toFixed(2));
             socket.send(readings); 
             setTimeout(function () {
                 sensor.read();
