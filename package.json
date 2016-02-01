@@ -30,6 +30,7 @@
     "express": "^4.13.4",
     "express-dot-engine": "^1.0.7",
     "ip": "^1.1.0",
+    "node-dht-sensor": "^0.0.8",
     "socket.io": "^1.4.5"
   }
 }
