@@ -13,7 +13,9 @@ var config = {
   slashes: true,
   hostname: ip.address(),
   port: 3001,
-  frequency: 5000
+  sensorType: 22,
+  gpioPin: 4,
+  frequency: 3000
 }
 
 app.engine('dot', engine.__express)
@@ -30,7 +32,7 @@ app.get('/', function (req, res) {
 
 var sensor = {
   initialize: function () {
-    return sensorlib.initialize(22, 4)
+    return sensorlib.initialize(config.sensorType, config.gpioPin)
   },
   read: function () {
     var readout = sensorlib.read()
@@ -67,8 +69,7 @@ function random (low, high) {
   return Math.random() * (high - low) + low;
 }
 
-function readSensor() {
-    var readings = sensor.read()
+function printReadings(readings) {
     console.log('\033c')
     console.log('%s [%s] Temperature: %d%s | Humidity: %d%%',
       dateFormat(readings.temperature.timestamp, 'isoDateTime'),
@@ -79,8 +80,15 @@ function readSensor() {
     )
 }
 
-if (sensor.initialize()) {
+
   setTimeout(function () {
     readSensor()
   }, config.frequency)
 }
+if (!sensor.initialize()) {
+  console.warn('Failed to initialize sensor');
+  return;
+}
+var readSensor = setInterval(function() {
+  printReadings(sensor.read())
+}, config.frequency)
