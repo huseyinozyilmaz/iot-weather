@@ -22,7 +22,6 @@ app.set('view engine', 'dot')
 
 server.listen(config.port, function() {
   console.log('App running on ' + url.format(config))
-  readSensor()
 })
 
 app.get('/', function (req, res) {
@@ -69,17 +68,19 @@ function random (low, high) {
 }
 
 function readSensor() {
-  if (sensor.initialize()) {
-    setTimeout(function () {
-      var readings = sensor.read()
-      console.log('\033c')
-      console.log('%s [%s] Temperature: %d%s | Humidity: %d%%',
-        dateFormat(readings.temperature.timestamp, 'isoDateTime'),
-        readings.id,
-        readings.temperature.value,
-        readings.temperature.unit,
-        readings.humidity.value
-      )
-    }, config.frequency)
-  }
+    var readings = sensor.read()
+    console.log('\033c')
+    console.log('%s [%s] Temperature: %d%s | Humidity: %d%%',
+      dateFormat(readings.temperature.timestamp, 'isoDateTime'),
+      readings.id,
+      readings.temperature.value,
+      readings.temperature.unit,
+      readings.humidity.value
+    )
+}
+
+if (sensor.initialize()) {
+  setTimeout(function () {
+    readSensor()
+  }, config.frequency)
 }
