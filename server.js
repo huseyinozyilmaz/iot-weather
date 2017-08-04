@@ -5,6 +5,8 @@ var io = require('socket.io')(server)
 var url = require('url')
 var ip = require('ip')
 var os = require("os")
+var util = require('util')
+var dateFormat = require('dateformat')
 var sensorlib = require('node-dht-sensor')
 
 var config = {
@@ -38,20 +40,28 @@ var sensor = {
     var readings = {
       id: os.hostname(),
       temperature : {
-        value: readout.temperature,
-        unit: "°C",
+        value: readout.temperature.toFixed(2),
+        unit: '°C',
         timestamp: timestamp
       },
       humidity : {
-        value: readout.humidity,
-        unit: "%",
+        value: readout.humidity.toFixed(2),
+        unit: '%',
         timestamp: timestamp
       }
     }
-    console.log("T:" + readout.temperature.toFixed(2) + " | H:" + readout.humidity.toFixed(2))
+    process.stdout.write('%s [%s] Temperature: %d%s | Humidity: %d%s',
+      dateFormat(timestamp, 'isoDateTime'),
+      readings.id,
+      readings.temperature.value,
+      readings.temperature.unit,
+      readings.humidity.value,
+      readings.humidity.unit
+    )
+    //console.log("T:" + readout.temperature.toFixed(2) + " | H:" + readout.humidity.toFixed(2))
     setTimeout(function () {
         sensor.read()
-    }, 5000)
+    }, config.frequency)
   }
 }
 
@@ -71,7 +81,7 @@ function random (low, high) {
 }
 
 function readSensor() {
-  process.stdout.write("hello: ");
+
 }
 
 if (sensor.initialize()) {
