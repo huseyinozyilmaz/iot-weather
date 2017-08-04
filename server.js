@@ -74,7 +74,7 @@ function readSensor() {
       var readings = sensor.read()
       console.log('\033c')
       console.log('%s [%s] Temperature: %d%s | Humidity: %d%%',
-        dateFormat(timestamp, 'isoDateTime'),
+        dateFormat(readings.temperature.timestamp, 'isoDateTime'),
         readings.id,
         readings.temperature.value,
         readings.temperature.unit,
