@@ -21,7 +21,7 @@ To test the application run:
 
 ### RasberryPi Setup
 iot-weather application can be used in a raspberry pi capable of running Node.js.
-#### Headless Raspbery Pi Setup in Mac OS
+#### Headless Raspberry Pi Setup in Mac OS
 1. Format your SD Card with SDFormatter
 2. Download Raspberry Pi OS image from https://downloads.raspberrypi.org/raspbian_lite_latest
 3. Checksum the image file downloaded: ```shasum ~/Downloads/2017-04-10-raspbian-jessie-lite.zip```
@@ -89,6 +89,14 @@ sudo make install
 cd..
 rm bcm2835-1.52.tar.gz
 ```
+2. Connect DHT22 sensor to Raspberry Pi
+```
+DHT22  Raspberry Pi
+-----  ---------------
+ DAT -> PIN 7 (GPIO4)
+ VCC -> PIN 1 (3V)
+ GND -> PIN 6 (Ground)
+```
 ### Clone Project
 Clone the application from https://github.com/huseyinozyilmaz/iot-weather.git and install all the dependencies:
 ```
@@ -106,7 +114,7 @@ sudo npm install forever -g
 sudo npm install forever-service -g
 sudo forever-service install iot-weather-service
 ```
-If the service installation is successfull then you should be able to start, stop, restart the service:
+If the service installation is successful then you should be able to start, stop, restart the service:
 ```
 sudo service iot-weather-service start
 sudo service iot-weather-service stop
