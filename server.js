@@ -71,16 +71,15 @@ function random (low, high) {
 function readSensor() {
   if (sensor.initialize()) {
     setTimeout(function () {
-        var readings = sensor.read()
-        console.clear()
-        console.log('%s [%s] Temperature: %d%s | Humidity: %d%%',
-            dateFormat(timestamp, 'isoDateTime'),
-            readings.id,
-            readings.temperature.value,
-            readings.temperature.unit,
-            readings.humidity.value
-          )
-        )
+      var readings = sensor.read()
+      console.clear()
+      console.log('%s [%s] Temperature: %d%s | Humidity: %d%%',
+        dateFormat(timestamp, 'isoDateTime'),
+        readings.id,
+        readings.temperature.value,
+        readings.temperature.unit,
+        readings.humidity.value
+      )
     }, config.frequency)
   }
 }
