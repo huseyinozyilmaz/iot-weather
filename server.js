@@ -72,7 +72,7 @@ function readSensor() {
   if (sensor.initialize()) {
     setTimeout(function () {
       var readings = sensor.read()
-      console.clear()
+      console.log('\033c')
       console.log('%s [%s] Temperature: %d%s | Humidity: %d%%',
         dateFormat(timestamp, 'isoDateTime'),
         readings.id,
