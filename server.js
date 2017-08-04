@@ -32,6 +32,7 @@ var sensor = {
     return sensorlib.initialize(22, 4)
   },
   read: function () {
+    console.log('Reading...')
     var readout = sensorlib.read()
     var timestamp = new Date()
     var readings = {
@@ -50,14 +51,12 @@ var sensor = {
     console.log("T:" + readout.temperature.toFixed(2) + " | H:" + readout.humidity.toFixed(2))
     setTimeout(function () {
         sensor.read()
-    }, config.frequency)
+    }, 5000)
   }
 }
 
 io.on('connection', function (socket) {
     var delay = 5000;
-
-
 
     if (sensor.initialize()) {
         sensor.read();
@@ -65,36 +64,16 @@ io.on('connection', function (socket) {
         console.warn('Failed to initialize sensor');
         socket.send({error:"Failed to initialize sensor"});
     }
-
-    /**
-    (function sendData() {
-        var readings = {
-            id: os.hostname(),
-            temperature : {
-                value: random(20,25),
-                unit: "°C",
-                timestamp: new Date()
-            },
-            humidity : {
-                value: random(50,75),
-                unit: "%",
-                timestamp: new Date()
-            }
-        };
-        console.log(readings);
-        socket.send(readings);
-
-        setTimeout(sendData, delay);
-    })();
-    */
-});
+})
 
 function random (low, high) {
-    return Math.random() * (high - low) + low;
+  return Math.random() * (high - low) + low;
 }
 
 function readSensor() {
-    process.stdout.write("hello: ");
+  process.stdout.write("hello: ");
 }
 
-sensor.read()
+if (sensor.initialize()) {
+  sensor.read()
+}
