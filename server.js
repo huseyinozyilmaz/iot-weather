@@ -50,13 +50,15 @@ var sensor = {
         timestamp: timestamp
       }
     }
-    process.stdout.write('%s [%s] Temperature: %d%s | Humidity: %d%s',
-      dateFormat(timestamp, 'isoDateTime'),
-      readings.id,
-      readings.temperature.value,
-      readings.temperature.unit,
-      readings.humidity.value,
-      readings.humidity.unit
+    process.stdout.write(
+      util.format('%s [%s] Temperature: %d%s | Humidity: %d%s',
+        dateFormat(timestamp, 'isoDateTime'),
+        readings.id,
+        readings.temperature.value,
+        readings.temperature.unit,
+        readings.humidity.value,
+        readings.humidity.unit
+      )
     )
     //console.log("T:" + readout.temperature.toFixed(2) + " | H:" + readout.humidity.toFixed(2))
     setTimeout(function () {
