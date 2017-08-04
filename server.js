@@ -70,25 +70,21 @@ function random (low, high) {
 }
 
 function printReadings(readings) {
-    console.log('\033c')
-    console.log('%s [%s] Temperature: %d%s | Humidity: %d%%',
-      dateFormat(readings.temperature.timestamp, 'isoDateTime'),
-      readings.id,
-      readings.temperature.value,
-      readings.temperature.unit,
-      readings.humidity.value
-    )
+  console.log('\033c')
+  console.log('%s [%s] Temperature: %d%s | Humidity: %d%%',
+    dateFormat(readings.temperature.timestamp, 'isoDateTime'),
+    readings.id,
+    readings.temperature.value,
+    readings.temperature.unit,
+    readings.humidity.value
+  )
 }
 
-
-  setTimeout(function () {
-    readSensor()
-  }, config.frequency)
-}
 if (!sensor.initialize()) {
-  console.warn('Failed to initialize sensor');
-  return;
+  console.warn('Failed to initialize sensor')
+  return
 }
+
 var readSensor = setInterval(function() {
   printReadings(sensor.read())
 }, config.frequency)
